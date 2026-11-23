@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>அலகு 3: பன்மைப் பண்பாட்டுச் சமூகம்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&display=swap">
+<style>
+:root{color-scheme:dark;--ink:#FFF4E0;--gold:#F5B841;--teal:#3DDAD7;--card:#22174A}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{font-family:'Noto Sans Tamil',system-ui,sans-serif;color:var(--ink);background:radial-gradient(circle at 15% 10%,#3A2478 0,transparent 45%),radial-gradient(circle at 90% 95%,#0F5560 0,transparent 45%),#150E2E;line-height:1.4}
+#cv{position:absolute;left:50%;top:50%;transform-origin:0 0;overflow:hidden}
+#app{width:100%;height:100%;display:flex;flex-direction:column}
+#bar{position:absolute;left:0;top:0;height:8px;background:linear-gradient(90deg,var(--gold),var(--teal));transition:width .4s;z-index:3}
+header{padding:24px 40px 4px;text-align:center}
+.unit{display:inline-block;font-size:24px;color:#150E2E;background:var(--gold);font-weight:700;border-radius:999px;padding:2px 22px}
+h1{font-size:50px;margin:6px 0 0;line-height:1.25;animation:rise .6s both}
+@keyframes rise{from{opacity:0;transform:translateY(30px)}}
+@keyframes pop{from{opacity:0;transform:scale(.7)}}
+@keyframes fade{from{opacity:0}}
+@keyframes float{50%{transform:translateY(-8px)}}
+#stage{flex:1;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px 40px}
+.grid{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;align-items:center;max-width:1840px}
+.tile{--c:#F5B841;font:inherit;color:var(--ink);cursor:pointer;width:440px;min-height:150px;padding:16px 22px;border-radius:26px;border:3px solid var(--c);background:linear-gradient(rgba(255,255,255,.08),rgba(255,255,255,.08)),var(--card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;font-size:32px;font-weight:700;box-shadow:0 0 28px -8px var(--c);animation:pop .5s both;animation-delay:var(--d);transition:transform .2s}
+.tile .ic{font-size:52px;line-height:1.1;animation:float 3s ease-in-out infinite}
+.tile:hover{transform:translateY(-5px) scale(1.04)}
+.tile.seen{background:linear-gradient(color-mix(in srgb,var(--c) 26%,transparent),color-mix(in srgb,var(--c) 26%,transparent)),var(--card)}
+.tile.seen::after{content:"✔";font-size:24px;color:var(--c)}
+.tile small{display:block;font-size:22px;font-weight:400;line-height:1.3;opacity:.92}
+.big{width:560px;min-height:230px;font-size:38px}.big .ic{font-size:72px}
+.tm{width:340px;min-height:230px;font-size:30px}
+.sep{font-size:58px;font-weight:700;color:var(--gold);animation:pop .5s both;animation-delay:var(--d)}
+.br{flex-basis:100%;height:0}
+.mm{position:relative;width:1800px;height:720px}
+.mm svg{position:absolute;left:0;top:0;width:1800px;height:720px}
+.mm path{fill:none;stroke-width:4;opacity:.55;animation:fade .8s both}
+.mm .tile,.mm .nd{position:absolute;translate:-50% -50%;min-height:0;height:auto;padding:10px 16px;border-radius:22px;font-size:25px;gap:2px;flex-direction:column}
+.mm .nd{border:3px solid var(--c);background:linear-gradient(rgba(255,255,255,.12),rgba(255,255,255,.12)),var(--card);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;animation:pop .5s both;animation-delay:var(--d)}
+.mm .cn{font-size:34px;padding:18px 24px;border-width:5px;border-radius:40px}
+.mm .tile small{font-size:20px}
+table{border-collapse:separate;border-spacing:0 9px;width:1800px;font-size:26px;table-layout:fixed}
+th{background:var(--gold);color:#150E2E;padding:12px 18px;text-align:left;font-size:28px}
+th:first-child{border-radius:16px 0 0 16px}th:last-child{border-radius:0 16px 16px 0}
+td{background:rgba(255,255,255,.09);padding:11px 18px;vertical-align:middle}
+td:first-child{border-radius:16px 0 0 16px;font-weight:700;color:var(--teal)}td:last-child{border-radius:0 16px 16px 0}
+table.pair td:first-child{color:inherit;font-weight:400}
+table.pair td{font-size:28px;padding:14px 22px}
+table.ctr td,table.ctr th{text-align:center;font-size:30px;padding:20px 12px}
+table.ctr td:first-child{text-align:left}
+td.has{background:rgba(74,222,128,.22)}
+tbody tr{cursor:pointer;animation:fade .5s both;animation-delay:var(--d)}
+tbody tr:hover td{background:rgba(255,255,255,.2)}
+tbody tr:hover td.has{background:rgba(74,222,128,.35)}
+tbody tr.seen td:first-child::before{content:"✔ ";color:var(--gold)}
+#hint{text-align:center;font-size:26px;opacity:.85}
+nav{display:flex;align-items:center;justify-content:center;gap:22px;padding:8px 20px 18px}
+nav button{font:inherit;font-size:30px;font-weight:700;border:0;border-radius:999px;padding:10px 44px;background:var(--gold);color:#150E2E;cursor:pointer}
+nav button:disabled{opacity:.35;cursor:default}
+#cnt{font-size:26px;min-width:90px;text-align:center;opacity:.9}
+#dots{display:flex;gap:12px;align-items:center}
+#dots i{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer}
+#dots i.on{background:var(--gold);transform:scale(1.45)}
+#pop{position:absolute;inset:0;background:rgba(5,5,20,.78);display:none;align-items:center;justify-content:center;padding:24px;z-index:5}
+#pop.show{display:flex}
+#card{--c:#F5B841;position:relative;width:1250px;max-width:100%;max-height:100%;overflow:auto;background:#241A4D;border:5px solid var(--c);border-radius:36px;padding:34px 46px 30px;text-align:center;animation:pop .35s both;box-shadow:0 0 80px -10px var(--c)}
+#card .big-ic{font-size:84px;line-height:1.1}
+#card h2{margin:4px 0 12px;font-size:48px;color:var(--c);line-height:1.3}
+#card ul{list-style:none;margin:0;padding:0;text-align:left;font-size:36px}
+#card li{padding:10px 22px;margin:9px 0;border-radius:18px;background:rgba(255,255,255,.09);animation:rise .4s both}
+#card.sm ul{font-size:30px}#card.sm li{padding:7px 20px;margin:7px 0}
+#card.xs ul{font-size:26px}#card.xs li{padding:5px 18px;margin:5px 0}
+#x{position:absolute;top:14px;right:22px;font:inherit;font-size:44px;border:0;background:none;color:var(--ink);cursor:pointer}
+</style>
+</head>
+<body>
+<div id="cv">
+<div id="bar"></div>
+<div id="app">
+<header><div class="unit">🌏 அலகு 3 · பன்மைப் பண்பாட்டுச் சமூகம்</div><h1 id="t"></h1></header>
+<div id="stage"><div class="grid" id="g"></div></div>
+<div id="hint"></div>
+<nav><button id="pv" aria-label="முந்தையது">◀</button><span id="cnt"></span><div id="dots"></div><button id="nx" aria-label="அடுத்தது">▶</button></nav>
+</div>
+<div id="pop"><div id="card"><button id="x" aria-label="மூடு">✕</button><div class="big-ic" id="ci"></div><h2 id="ch"></h2><ul id="cl"></ul></div></div>
+</div>
+<script>
+var COL=['#F5B841','#3DDAD7','#FF6B8B','#A99BFF','#4ADE80','#FF9F5A'];
+var S=[
+{t:'1. அறிமுகமும் வரைவிலக்கணங்களும்',cls:'big',br:[1],it:[
+['🌐','பன்மைத்துவ சமூகம் (Pluralistic Society)',['இன, மொழி, சமய, கலாசார மற்றும் பழக்கவழக்க வேறுபாடுகளைக் கொண்ட பல்வேறு மக்கள் குழுக்கள் ஒன்றாக இணைந்து வாழும் சமூக முறைமையாகும்.'],'பல குழுக்கள் · ஒரே சமூகம்'],
+['🎭','பண்பாடு (Culture)',['ஒரு சமூகத்தின் வாழ்க்கை முறை, நம்பிக்கைகள், கலைகள் மற்றும் நடத்தைக் கோலங்களின் மொத்த உருவமாகும்.'],'வாழ்க்கை முறையின் மொத்த உருவம்'],
+['📚','ஈ. பி. டைலர் (E.B. Tylor)',['“அறிவு, வழிபாடுகள், கலைகள், சட்டம், கலாசாரம், பழக்கவழக்கங்கள் மற்றும் சமூகத்தில் வாழ்வதன் மூலம் மனிதர்கள் பெற்றுக்கொள்ளும் ஏனைய அனைத்துத் திறன்கள் மற்றும் பழக்கவழக்கங்களின் மொத்த அமைப்பே பண்பாடாகும்.”'],'பண்பாடு = பெற்றுக்கொள்ளும் திறன்களின் மொத்த அமைப்பு'],
+['🔤','சார்லஸ் ஏ. எல்வூட்',['“குறியீட்டு ரீதியாக சமூகம் உரித்தாக்கிக்கொண்டுள்ளதுடன், பாரம்பரியமாகப் பேணிவருவதுமான அனைத்து நடத்தைக்கோலங்களுக்கும் வழங்கப்படக்கூடிய கூட்டான பெயரே பண்பாடாகும்.”'],'பண்பாடு = நடத்தைக்கோலங்களின் கூட்டுப் பெயர்']]},
+{t:'2. பன்மைச் சமூகம் தோன்றக் காரணமான காரணிகள் (Mind Map)',mm:{c:['🇱🇰','இலங்கையில் பன்மைப் பண்பாட்டுச் சமூகம்'],
+b:[['📍','அ) அமைவிடம் / புவியியல் காரணிகள்',470,360,'#3DDAD7'],['📜','ஆ) வரலாற்று & சமூகக் காரணிகள்',1330,360,'#F5B841']],
+l:[
+[0,'🌊','இந்தியப் பெருங்கடலின் மத்தியில் அமைந்தமை',['கடல்சார் வர்த்தகர்களுக்கும் கடற்பயணிகளுக்கும் இடைத்தங்கல் மையமாக இலங்கை விளங்கியமை.'],165,110,'இடைத்தங்கல் மையம்'],
+[0,'🧭','இந்தியாவிற்கு அண்மையில் அமைந்தமை',['இந்தியாவிலிருந்து பல்வேறு காலப்பகுதிகளில் மக்கள் குடிபெயர்வதற்கும் ஆக்கிரமிப்புகள் இடம்பெறுவதற்கும் ஏதுவாக அமைந்தமை.'],165,360,'குடிபெயர்வு · ஆக்கிரமிப்பு'],
+[0,'⛵','கிழக்கு – மேற்கு கடல் வர்த்தகப் பாதையில் அமைந்தமை',['வெளிநாட்டு வர்த்தகர்கள் (அரபியர், சீனர்கள், ஐரோப்பியர்கள்) வருகை தந்து குடியேற வழியமைத்தமை.'],165,610,'அரபியர் · சீனர் · ஐரோப்பியர்'],
+[1,'🚶','குடிவரவும் குடியேற்றங்களும்',['பண்டைக் காலம் தொட்டு தென்னிந்தியா மற்றும் பிற பகுதிகளிலிருந்து மக்கள் வந்து குடியேறியமை.'],1635,110,'தென்னிந்தியா முதலிய பகுதிகள்'],
+[1,'🛍️','வர்த்தகத் தொடர்புகள்',['அரபு வர்த்தகர்களின் வருகையால் இஸ்லாம் சமயமும் முஸ்லிம் கலாசாரமும் இலங்கையில் பரவியமை.'],1635,360,'இஸ்லாம் · முஸ்லிம் கலாசாரம்'],
+[1,'🏰','ஐரோப்பியர் ஆட்சிக் காலம்',['போர்த்துக்கேயர், ஒல்லாந்தர், பிரித்தானியர் ஆட்சியினால் கத்தோலிக்க/புரட்டஸ்தாந்து மதங்கள், ஐரோப்பியக் கலாசாரம், பர்ஹர் (பரங்கியர்) மற்றும் மலாயர் சமூகங்கள் உருவானமை.'],1635,610,'புதிய மதங்களும் சமூகங்களும்']]}},
+{t:'3. காலக்கோடு: பன்மைச் சமூகம் உருவான படிநிலைகள்',cls:'tm',arrow:1,br:[3],it:[
+['🚢','கி.மு. 6ஆம் நூற்றாண்டு',['விஜயன் மற்றும் அவனது தோழர்களின் வருகை','வட மற்றும் தென்னிந்தியக் குடியேற்றங்கள்'],'விஜயன் வருகை · ஆரியக் குடியேற்றங்கள்'],
+['☸️','கி.மு. 3ஆம் நூற்றாண்டு',['மிஹிந்தலைக்கு மிஹிந்து தேரரின் (மகிந்த தேரர்) வருகை மூலம் பௌத்த சமயம் இலங்கையில் அறிமுகமாதல்'],'மிஹிந்து தேரர் · பௌத்தம் அறிமுகம்'],
+['☪️','மத்திய காலம் (கி.பி. 8 – 14)',['அரபு தேசத்து வர்த்தகர்களின் வருகை மூலம் இஸ்லாம் சமயமும் முஸ்லிம் சமூகமும் இலங்கையில் கால்பதித்தல்'],'அரபு வர்த்தகர் · இஸ்லாம்'],
+['⛪','கி.பி. 1505',['போர்த்துக்கேயரின் வருகை','கத்தோலிக்க மதம், மேற்கத்தேய ஆடைகள், உணவுகள் மற்றும் பெயர்கள் அறிமுகமாதல்'],'போர்த்துக்கேயர் · கத்தோலிக்கம்'],
+['⚓','கி.பி. 1658',['ஒல்லாந்தரின் வருகை','ரோமன் டச்சுச் சட்டம், புரட்டஸ்தாந்து கிறித்துவ மதம் மற்றும் பறங்கியர் (Burgher) சமூகத்தின் தோற்றம்'],'ஒல்லாந்தர் · புரட்டஸ்தாந்து · பறங்கியர்'],
+['🌿','கி.பி. 1796 / 1815',['பிரித்தானியர் ஆட்சி','ஆங்கில மொழி அறிமுகம்','பெருந்தோட்டச் செய்கைக்காகத் தென்னிந்தியத் தோட்டத் தொழிலாளர்கள் வருகை','மலாயா நாட்டிலிருந்து மலாயர் (Malays) சமூகத்தினரின் வருகை'],'ஆங்கிலம் · தோட்டத் தொழிலாளர் · மலாயர்'],
+['🇱🇰','கி.பி. 1948 – தற்காலம்',['சுதந்திரத்திற்குப் பின்னரான இலங்கையில் சிங்களவர், தமிழர், முஸ்லிம்கள், பர்ஹர்கள், மலாயர்கள் போன்ற பல்வேறு இனத்தவர்களும் பௌத்த, இந்து, இஸ்லாமிய, கிறித்துவ மதங்களைப் பின்பற்றும் பன்மைச் சமூகமாக வாழ்தல்'],'பன்மைப் பண்பாட்டுச் சமூகம்']]},
+{t:'4. இலங்கையின் இனக் குழுக்களும் பண்பாட்டு அம்சங்களும்',tb:1,cw:[20,13,22,45],h:['இனக் குழு','பிரதான மொழி','பிரதான சமயங்கள்','பண்பாட்டுச் சிறப்பம்சங்கள்'],r:[
+['சிங்களவர்','சிங்களம்','பௌத்தம், கத்தோலிக்கம் / கிறிஸ்தவம்','அளுத் அவ்ருத்து (சிங்களப் புத்தாண்டு), பெரஹரா விழாக்கள், பாரம்பரிய நடனங்கள்'],
+['தமிழர் (இலங்கைத் தமிழர் & மலையகத் தமிழர்)','தமிழ்','இந்து சமயம், கத்தோலிக்கம் / கிறிஸ்தவம்','தைப்பொங்கல், தீபாவளி, கோயில் திருவிழாக்கள், கர்நாடக இசை & பரதநாட்டியம்'],
+['இலங்கை முஸ்லிம்கள்','தமிழ் / அரபு','இஸ்லாம்','ஹஜ்ஜுப் பெருநாள், ரமழான் நோன்புப் பெருநாள், பள்ளிவாசல் வழிபாடுகள்'],
+['பறங்கியர்','ஆங்கிலம்','கத்தோலிக்கம் / புரட்டஸ்தாந்து','மேற்கத்தேய வாழ்க்கை முறை, பைக் பாண்ட் (Bailar) இசை, மேற்கத்தேய உணவுப் பழக்கம்'],
+['மலாயர்','மலாய் / தமிழ் / ஆங்கிலம்','இஸ்லாம்','மலாய் பாரம்பரியக் கலைகள், சிறப்பு உணவு முறைகள் (எ.கா: பபிட், வட்டாப்பம்)']]},
+{t:'ஒப்பீடு: ஒரே இனக் குழுவிற்குள் மதப் பன்மைத்துவம்',tb:1,ctr:1,cw:[24,19,19,19,19],h:['இனக் குழு','☸️ பௌத்தம்','🕉️ இந்து','☪️ இஸ்லாம்','✝️ கத்தோலிக்க / கிறிஸ்தவம்'],r:[
+['சிங்கள மக்கள்','🌿 (பெரும்பான்மை)','—','—','🌿 (குறிப்பிடத்தக்களவு)'],
+['தமிழ் மக்கள்','—','🌿 (பெரும்பான்மை)','—','🌿 (குறிப்பிடத்தக்களவு)'],
+['முஸ்லிம் / மலாய் மக்கள்','—','—','🌿 (முழுமையாக)','—']]},
+{t:'5. பன்மைப் பண்பாட்டுச் சமூகம்: நன்மைகள் × சவால்கள்',tb:1,pair:1,cw:[50,50],h:['✅ நன்மைகள் (Advantages)','⚠️ சவால்கள் (Challenges)'],r:[
+['வேற்றுமையில் ஒற்றுமை: பல்வேறு கலாசாரக் கூறுகள் ஒன்றுசேர்ந்து நாட்டின் கலாசார வளத்தை அதிகப்படுத்துதல்.','இன / மத முரண்பாடுகள்: சகிப்புத்தன்மை இன்மையால் இனவாத, மதவாத மோதல்கள் தோன்றும் அபாயம்.'],
+['பரஸ்பரக் கற்றல்: பிற இன மக்களின் மொழி, கலை, உணவு, ஆடை மற்றும் பாரம்பரியங்களை அறிந்து மதிக்கும் வாய்ப்பு.','தவறான புரிதல்கள்: பிற சமூகங்களின் பண்பாடுகள் பற்றிய அறிவின்மையால் சந்தேகங்கள் ஏற்படுதல்.'],
+['சர்வதேசத் தொடர்பு: பல்வேறு உலக நாடுகளுடன் இலகுவாகக் கலாசார மற்றும் வர்த்தகத் தொடர்புகளை ஏற்படுத்திக் கொள்ளல்.','சமத்துவமின்மை / பாரபட்சம்: சில குழுக்கள் ஒதுக்கப்படுவதாகவோ அல்லது அநீதி இழைக்கப்படுவதாகவோ உணர்தல்.'],
+['ஆக்கபூர்வ சிந்தனை: பலதரப்பட்ட மக்களின் அறிவும் திறமைகளும் இணைந்து நாட்டின் அபிவிருத்திக்கு வழிவகுத்தல்.','தேசிய ஒருமைப்பாட்டின்மை: குறுகிய இன/மத அடையாளங்களுக்கு முன்னுரிமை அளிப்பதால் தேசிய அடையாளம் பலவீனமடைதல்.']]},
+{t:'6. நல்லாட்சி (Good Governance) – 10 பிரதான பண்புகள்',mm:{cols:1,c:['🏛️','நல்லாட்சி','Good Governance','nl'],
+l:[
+[-1,'🧹','1. ஊழல் மற்றும் முறைகேடற்ற நிர்வாகம்',['லஞ்சம், ஊழல், துஷ்பிரயோகங்கள் அற்ற நேர்மையான நிர்வாகம்.']],
+[-1,'⚖️','2. சுதந்திரமும் சமூக நீதியும் நிலைநாட்டப்படல்',['அனைத்துப் பிரஜைகளுக்கும் சமமான வாய்ப்புகளும் நீதியும் கிடைத்தல்.']],
+[-1,'🏛️','3. சட்டத்தின் ஆட்சியும் நீதித்துறையின் சுதந்திரமும்',['சட்டத்தின் முன் அனைவரும் சமம்; நீதித்துறை சுயாதீனமாக இயங்குதல்.']],
+[-1,'🧾','4. பொறுப்புக் கூறும் கடப்பாடு (Accountability)',['ஆட்சியாளர்களும் அரசு அதிகாரிகளும் தமது செயல்களுக்கு மக்களுக்குப் பொறுப்புக் கூறுதல்.']],
+[-1,'🛡️','5. அடிப்படை உரிமைகள் பாதுகாக்கப்படல்',['மனித உரிமைகளும் பிரஜைகளின் அடிப்படைச் சுதந்திரங்களும் உறுதி செய்யப்படல்.']],
+[-1,'📰','6. ஊடகச் சுதந்திரத்தைப் பாதுகாத்தல்',['தகவல்களை அறியும் உரிமை மற்றும் கருத்து வெளியீட்டுச் சுதந்திரம் பேணப்படல்.']],
+[-1,'🌾','7. வளங்களை வினைத்திறனாகப் பயன்படுத்துதல்',['நாட்டின் இயற்கை மற்றும் நிதி வளங்கள் வீணடிக்கப்படாமல் பயன்படுத்தப்படல்.']],
+[-1,'🔍','8. வெளிப்படைத்தன்மை (Transparency)',['அரசின் முடிவுகளும் நிதிச் செலவினங்களும் மக்களுக்குத் தெளிவுபடுத்தப்படல்.']],
+[-1,'🗳️','9. அரசியல் சமுதாயமயமாக்கல்',['பிரஜைகள் ஆட்சியில் சுறுசுறுப்பாகப் பங்கேற்பதற்கான சூழலை உருவாக்குதல்.']],
+[-1,'📜','10. அரசியலமைப்பிற்கு மதிப்பளித்தல்',['நாட்டின் அடிப்படைச் சட்ட ஆவணமான அரசியலமைப்பின் விதிகளுக்கு அமைவாக ஆட்சி நடாத்தப்படல்.']]]}},
+{t:'7. நல்லாட்சியை நிலைநாட்டும் 4 பிரதான பெறுமானங்கள்',tb:1,cw:[24,76],h:['பெறுமான வகை','உள்ளடங்கும் பிரதான அம்சங்கள்'],r:[
+['🗳️ 1. அரசியல் பெறுமானங்கள்','தமக்கு விருப்பமான அரசியல் கருத்துக்களைப் பின்பற்றுதல், சுதந்திரமான தேர்தலில் பங்கேற்றல், அரசியல் தீர்மானங்களில் சுதந்திரமாகத் தொழிற்படுதல், அரசியல் தலைமைத்துவத்திற்கு மதிப்பளித்தல்.'],
+['🤝 2. சமூகப் பெறுமானங்கள்','பிற இன, மத மக்களின் உரிமைகளை மதித்தல், சமூக சமத்துவத்தைப் பேணுதல், சகிப்புத்தன்மையுடன் வாழ்தல், சமூக நல்லிணக்கத்தைக் கட்டியெழுப்புதல்.'],
+['💰 3. பொருளாதாரப் பெறுமானங்கள்','நாட்டின் வளங்களை நியாயமாகவும் வெளிப்படையாகவும் பகிர்ந்தளித்தல், வறுமை ஒழிப்பு மற்றும் சமூக நலன்புரிச் சேவைகளை அனைவருக்கும் சமமாக வழங்குதல்.'],
+['🎭 4. கலாசாரப் பெறுமானங்கள்','பிற சமூகங்களின் ஆடைகள், உணவுகள், மொழிகள், வழிபாட்டு முறைகள் மற்றும் பாரம்பரிய விழாக்களுக்கு மதிப்பளித்துப் பாதுகாப்பு வழங்குதல்.']]}
+];
+var n=0,seen={};
+var $=function(i){return document.getElementById(i)};
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function mmGet(s,k){var m=s.mm;if(k=='c')return [m.c[0],m.c[1],m.c[3]?['நல்லாட்சி என்றால் என்ன?','அரசு கொள்கைத் தீர்மானங்களை மேற்கொள்ளும் விதத்திலும், அவற்றை நடைமுறைப்படுத்தும் விதத்திலும் பொதுமக்களின் நலன்களை உச்ச அளவில் பேணத்தக்க வகையிலும், மனித உரிமைகள் மற்றும் சமூக நீதி பாதுகாக்கப்படும் வகையிலும் சட்டத்தை மதித்து வெளிப்படையாகத் தொழிற்படும் ஊழலற்ற, பொறுப்புள்ள நிர்வாக முறையே நல்லாட்சி எனப்படும்.']:null];var l=m.l[k];return [l[1],l[2],l[3]]}
+function mmHtml(s){
+  var m=s.mm,L=m.l,cx=900,cy=360,nodes='',paths='',d=0,half=Math.ceil(L.length/2);
+  var cc=m.c[3]?' tile cn':' nd cn';
+  nodes+='<'+(m.c[3]?'button':'div')+' class="'+cc.trim()+(seen[n+'-c']?' seen':'')+'" data-k="c" style="--c:#F5B841;left:'+cx+'px;top:'+cy+'px;width:'+(m.c[3]?420:400)+'px;--d:0s"><span>'+m.c[0]+' '+m.c[1]+'</span>'+(m.c[2]?'<small>'+m.c[2]+' · தொடுங்கள்</small>':'')+'</'+(m.c[3]?'button':'div')+'>';
+  (m.b||[]).forEach(function(b,i){
+    paths+=path(cx,cy,b[2],b[3],b[4],.2);
+    nodes+='<div class="tile nd" style="--c:'+b[4]+';left:'+b[2]+'px;top:'+b[3]+'px;width:290px;font-size:26px;--d:'+(.25+i*.1)+'s">'+b[0]+' '+b[1]+'</div>';
+  });
+  L.forEach(function(l,i){
+    var x=l[4],y=l[5],c=COL[i%6],px=cx,py=cy;
+    if(m.cols){var left=i<half,idx=left?i:i-half,cnt=left?half:L.length-half;x=left?215:1585;y=360+(idx-(cnt-1)/2)*140}
+    if(l[0]>=0){px=m.b[l[0]][2];py=m.b[l[0]][3];c=m.b[l[0]][4]}
+    paths+=path(px,py,x,y,c,.4+i*.05);
+    nodes+='<button class="tile'+(seen[n+'-'+i]?' seen':'')+'" data-k="'+i+'" style="--c:'+c+';left:'+x+'px;top:'+y+'px;width:'+(m.cols?370:330)+'px;--d:'+(.4+i*.06).toFixed(2)+'s"><span>'+l[1]+' '+l[2]+'</span>'+(l[6]?'<small>'+l[6]+'</small>':'')+'</button>';
+  });
+  return '<div class="mm"><svg>'+paths+'</svg>'+nodes+'</div>';
+}
+function path(x1,y1,x2,y2,c,dl){var mx=(x1+x2)/2;return '<path d="M'+x1+' '+y1+' C'+mx+' '+y1+' '+mx+' '+y2+' '+x2+' '+y2+'" stroke="'+c+'" style="animation-delay:'+dl.toFixed(2)+'s"/>'}
+function show(i){
+  n=Math.max(0,Math.min(S.length-1,i));var s=S[n],h='',d=0,tot,hint='ஒவ்வொன்றையும் தொடுங்கள்';
+  $('t').textContent=s.t;
+  if(s.tb){
+    tot=s.r.length;hint='ஒரு வரிசையைத் தொடுங்கள்';
+    h='<table class="'+(s.pair?'pair ':'')+(s.ctr?'ctr':'')+'">'+(s.cw?'<colgroup>'+s.cw.map(function(w){return '<col style="width:'+w+'%">'}).join('')+'</colgroup>':'')+'<thead><tr>'+s.h.map(function(x){return '<th>'+esc(x)+'</th>'}).join('')+'</tr></thead><tbody>'+
+    s.r.map(function(r,i2){return '<tr data-r="'+i2+'" class="'+(seen[n+'-'+i2]?'seen':'')+'" style="--d:'+(0.15*i2+.2).toFixed(2)+'s">'+r.map(function(c){return '<td'+(c.indexOf('🌿')==0?' class="has"':'')+'>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
+  }else if(s.mm){
+    tot=s.mm.l.length+(s.mm.c[3]?1:0);hint='ஒவ்வொரு கிளையையும் தொடுங்கள்';h=mmHtml(s);
+  }else{
+    tot=s.it.length;
+    s.it.forEach(function(it,k){
+      h+='<button class="tile '+(s.cls||'')+(seen[n+'-'+k]?' seen':'')+'" style="--c:'+COL[k%6]+';--d:'+(d+=.1).toFixed(2)+'s" data-k="'+k+'"><span class="ic">'+it[0]+'</span>'+it[1]+(it[3]?'<small>'+it[3]+'</small>':'')+'</button>';
+      var brk=s.br&&s.br.indexOf(k)>-1;
+      if(k<tot-1&&!(s.arrow&&brk)&&((s.sep&&s.sep[k])||s.arrow))h+='<span class="sep" style="--d:'+(d+=.1).toFixed(2)+'s">'+(s.arrow?'➜':s.sep[k])+'</span>';
+      if(brk)h+='<span class="br"></span>';
+    });
+  }
+  $('g').innerHTML=h;
+  var c=0;for(var j=0;j<tot;j++)if(seen[n+'-'+j])c++;
+  if(s.mm&&s.mm.c[3]&&seen[n+'-c'])c++;
+  $('hint').textContent='👆 '+hint+' ('+c+'/'+tot+')';
+  var dots='';for(var q=0;q<S.length;q++)dots+='<i data-n="'+q+'"'+(q==n?' class="on"':'')+'></i>';
+  $('dots').innerHTML=dots;$('cnt').textContent=(n+1)+' / '+S.length;
+  $('bar').style.width=((n+1)/S.length*100)+'%';
+  $('pv').disabled=n==0;$('nx').disabled=n==S.length-1;
+}
+function open_(k,ic,name,lines,html){
+  seen[n+'-'+k]=1;
+  $('card').style.setProperty('--c',COL[(+k||0)%6]);
+  $('ci').textContent=ic;$('ch').textContent=name;
+  $('cl').innerHTML=lines.map(function(l,j){return '<li style="animation-delay:'+(j*.12)+'s">'+(html?l:esc(l))+'</li>'}).join('');
+  var len=lines.join('').length;
+  $('card').className=len>520?'xs':len>300?'sm':'';
+  $('pop').classList.add('show');
+}
+function close_(){$('pop').classList.remove('show');show(n)}
+$('g').addEventListener('click',function(e){
+  var b=e.target.closest('.tile'),r=e.target.closest('tr[data-r]'),s=S[n];
+  if(b&&b.dataset.k!==undefined){var k=b.dataset.k,it=s.mm?mmGet(s,k):s.it[k];if(it[2])open_(k,it[0],it[1],it[2],0)}
+  else if(r){var i=+r.dataset.r,row=s.r[i],nm,ls;
+    if(s.pair){nm=row[0].split(':')[0]+' × '+row[1].split(':')[0];ls=row.map(function(c,j){return '<b>'+esc(s.h[j])+'</b>: '+esc(c)})}
+    else{nm=row[0];ls=row.slice(1).map(function(c,j){return '<b>'+esc(s.h[j+1])+'</b>: '+esc(c)})}
+    open_(i,s.pair?'⚖️':'🔍',nm,ls,1)}
+});
+$('pop').addEventListener('click',function(e){if(e.target.id=='pop'||e.target.id=='x')close_()});
+$('pv').onclick=function(){show(n-1)};$('nx').onclick=function(){show(n+1)};
+$('dots').addEventListener('click',function(e){if(e.target.dataset.n)show(+e.target.dataset.n)});
+document.addEventListener('keydown',function(e){
+  if(e.key=='Escape')close_();
+  else if(!$('pop').classList.contains('show')){if(e.key=='ArrowRight')show(n+1);if(e.key=='ArrowLeft')show(n-1)}
+});
+var x0=null;
+document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+document.addEventListener('touchend',function(e){
+  if(x0===null||$('pop').classList.contains('show'))return;
+  var dx=e.changedTouches[0].clientX-x0;x0=null;
+  if(Math.abs(dx)>70)show(n+(dx<0?1:-1));
+},{passive:true});
+function fit(){
+  var w=innerWidth,h=innerHeight,por=w/h<1,W=por?1080:1920,H=por?1920:1080,k=Math.min(w/W,h/H),cv=$('cv');
+  cv.style.width=W+'px';cv.style.height=H+'px';
+  cv.style.transform='translate('+(-W*k/2)+'px,'+(-H*k/2)+'px) scale('+k+')';
+}
+addEventListener('resize',fit);fit();
+show(0);
+</script>
+</body>
+</html>
